@@ -33,7 +33,11 @@ module.exports = yeoman.Base.extend({
       },
       {
         name: 'themeDesc',
-        message: 'What is your theme\'s description?'
+        message: 'What is your theme\'s description?',
+        default: function (answers) {
+          // Default to a helpful reminder to change the description later.
+          return 'Update ' + answers.themeName + '.info.yml if you want to change the theme description later.';
+        }
       },
       {
         type: 'list',
@@ -151,12 +155,8 @@ module.exports = yeoman.Base.extend({
         this.destinationPath('README.md')
       );
       this.fs.copy(
-        this.templatePath('eslintrc'),
-        this.destinationPath('.eslintrc')
-      );
-      this.fs.copy(
-        this.templatePath('babelrc'),
-        this.destinationPath('.babelrc')
+        this.templatePath('eslintrc.yml'),
+        this.destinationPath('.eslintrc.yml')
       );
       this.fs.copy(
         this.templatePath('sass-lint.yml'),
@@ -174,6 +174,13 @@ module.exports = yeoman.Base.extend({
       mkdirp('src/global/base');
       mkdirp('src/global/utils');
       mkdirp('src/templates');
+      mkdirp('src/layout');
+      // Some folders remain empty so add in a gitkeep
+      // so they're checked into git.
+      this.fs.copy(
+        this.templatePath('gitkeep'),
+        this.destinationPath('src/layout/.gitkeep')
+      );
     },
 
     // Add build tools.
@@ -283,6 +290,13 @@ module.exports = yeoman.Base.extend({
             themeNameMachine: this.themeNameMachine
           }
         );
+        this.fs.copyTpl(
+          this.templatePath('_src/_sample-components/_icons/icons.twig'),
+          this.destinationPath('src/components/icons/icons.twig'),
+          {
+            themeNameMachine: this.themeNameMachine
+          }
+        );
       }
 
       // If we're including sample sections, add a sample list component.
@@ -335,9 +349,6 @@ module.exports = yeoman.Base.extend({
   },
 
   end: function() {
-    // Shrinkwrap npm dependencies.
-    // This is the same as npm shrinkwrap --dev.
-    this.spawnCommand('npm', ['shrinkwrap', '--dev']);
     this.log(chalk.cyan.bgBlack.bold(
       `☠️  NOTE: Your new generated theme contains a fair bit of boilerplate code.
    This is by design. If you don't need it PLEASE delete it.

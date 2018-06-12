@@ -1,5 +1,52 @@
 # Changelog
 
+## 🕷 1.4.0 (2017-09-01)
+
+### Bug Fix
+* Back in **1.3.3** I fixed the layout folder but didn't quite get it in the right spot. This is now fixed.
+
+### New Feature
+* Updated Babel to use [env](https://github.com/babel/babel-preset-env) instead of a preset. This means you can simplify browser support a bit by adding browsers needed to the project's `package.json`.
+* Moved Autoprefixer config to the `package.json` file similar to Babel env. This sets us up for when both Babel env and Autoprefixer use the same config.
+* Added in error handling for JS and SCSS compiling. Now the watch task won't fail completely but will show you the error and keep watching files. This is a feature right?
+
+### Documentation
+* Add best practice about using the generator via [npx](https://www.npmjs.com/package/npx).
+* Added theme documentation that points out Autoprefixer and Babel project config.
+
+## 👾 1.3.4 (2017-07-12)
+
+### Bug Fix
+* Added a default description that's basically a reminder to update the theme description later. Thanks to Kevin for finding that Drupal chokes if there's no description provided.
+
+  **Thanks Kevin** for the [issue](https://github.com/mediacurrent/theme_generator_8/issues/11)!
+* Updated eslint to the new format. (Added a `.yml` extension.) Also fixed an issue where eslint will check the parent directories looking for a config file. This meant it could find other eslint config files and try to use those too.
+
+  [issue](https://github.com/mediacurrent/theme_generator_8/issues/9)
+* Fixed macro namespace for icon macro. This made it p much broken out of the box.
+
+  **Thanks Tim and Eric** for the [issue](https://github.com/mediacurrent/theme_generator_8/issues/7)!
+* Fixed issue with npm shrinkwrapping before all dev dependencies are installed.
+* Added `drupal.init.js` to KSS builder template.
+
+  **Thanks Eric** for the [issue](https://github.com/mediacurrent/theme_generator_8/issues/10)!
+* Updated all build tool dev dependencies to the latest version.
+
+## 🎈1.3.3 (2017-04-07)
+
+### Bug Fix
+* Added a `.gitkeep` to the layout folder. If the theme was created and checked into the repo _without_ anything being added to the layout dir... errors my friend. Errors.
+
+  **Thanks Tim** for the [issue](https://github.com/mediacurrent/theme_generator_8/issues/4)!
+* Added in default breakpoints in `*.breakpoints.yml`. Having this file contain only comments was bugging out some environments.
+
+  **Thanks Carie** for the [issue](https://github.com/mediacurrent/theme_generator_8/issues/2)!
+
+## 1.3.2 (2017-03-15)
+
+### New Feature
+* Updated version of Node / npm used with project. The old version was keeping the readme from showing up on [https://www.npmjs.com/package/generator-mc-d8-theme](npm).
+
 ## ✈️ 1.3.1 (2017-02-14)
 
 ### New Feature
